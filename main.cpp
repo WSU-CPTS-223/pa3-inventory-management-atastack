@@ -1,7 +1,10 @@
 #include <iostream>
 #include <string>
+#include "repl.h"
 
 using namespace std;
+
+Repl repl;
 
 void printHelp()
 {
@@ -28,14 +31,12 @@ void evalCommand(string line)
     // if line starts with find
     else if (line.rfind("find", 0) == 0)
     {
-        // Look up the appropriate datastructure to find if the inventory exist
-        cout << "YET TO IMPLEMENT!" << endl;
+        repl.process_cmd(line);
     }
     // if line starts with listInventory
     else if (line.rfind("listInventory") == 0)
     {
-        // Look up the appropriate datastructure to find all inventory belonging to a specific category
-        cout << "YET TO IMPLEMENT!" << endl;
+        repl.process_cmd(line);
     }
 }
 
@@ -44,10 +45,17 @@ void bootStrap()
     cout << "\n Welcome to Amazon Inventory Query System" << endl;
     cout << " enter :quit to exit. or :help to list supported commands." << endl;
     cout << "\n> ";
-    // TODO: Do all your bootstrap operations here
-    // example: reading from CSV and initializing the data structures
-    // Don't dump all code into this single function
-    // use proper programming practices
+
+    string csv = "marketing_sample_for_amazon_com-ecommerce__20200101_20200131__10k_data-1.csv";
+
+    if (repl.load_inventory(csv))
+    {
+        cout << "done: " << endl;
+    }
+    else
+    {
+        cout << "load failed: " << endl;
+    }
 }
 
 int main(int argc, char const *argv[])
